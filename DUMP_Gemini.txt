@@ -1,0 +1,447 @@
+Optimización Matemática y Gestión de
+Recursos en el Sistema de Salud Chileno:
+Un Análisis Exhaustivo de Modelos de
+Programación Lineal y sus Aplicaciones
+1. Introducción y Contextualización del Sistema de
+Salud Chileno
+1.1. El Imperativo de la Eficiencia en la Salud Pública
+
+El sistema de salud chileno se encuentra en una encrucijada histórica, definida por una
+tensión estructural entre una demanda creciente de servicios sanitarios complejos y una
+oferta de recursos restringida. Esta dinámica se ve exacerbada por la transición
+epidemiológica hacia enfermedades crónicas y el envejecimiento de la población, lo que
+impone una carga sin precedentes sobre la infraestructura hospitalaria pública. En este
+contexto, la Investigación de Operaciones (IO) y, específicamente, la Programación Lineal
+(LP) y la Programación Entera Mixta (MILP), emergen no solo como herramientas
+académicas, sino como instrumentos vitales para la política pública y la gestión sanitaria.
+La gestión eficiente de los recursos críticos —quirófanos, camas de hospitalización, personal
+médico y equipamiento especializado— es determinante para la calidad de la atención y la
+equidad en el acceso. La evidencia recopilada en este informe demuestra que la aplicación de
+modelos matemáticos de optimización puede generar mejoras de eficiencia de entre el 10% y
+el 20% en comparación con los métodos de gestión manuales o heurísticos tradicionales
+utilizados actualmente en la mayoría de los hospitales chilenos.1
+Este informe tiene como objetivo proporcionar una caracterización profunda, rigurosa y
+técnicamente viable de problemas de optimización en el área de la salud en Chile, diseñados
+específicamente para ser abordados mediante modelos de programación lineal. El
+documento está estructurado para servir como base teórica y práctica para el desarrollo del
+"Proyecto I: Métodos de Optimización", cumpliendo con los requisitos de relevancia nacional,
+respaldo bibliográfico y factibilidad de modelamiento.
+1.2. La Crisis de las Listas de Espera: El Motor del Problema
+
+El problema más visible y políticamente sensible del sistema de salud chileno es la
+acumulación de pacientes en listas de espera, particularmente para patologías No GES
+(Garantías Explícitas en Salud). Mientras que el sistema GES establece plazos legales
+máximos para la atención de un conjunto priorizado de enfermedades, las patologías No GES
+carecen de esta protección legal estricta, lo que ha derivado en tiempos de espera que
+frecuentemente superan los 400 días para intervenciones quirúrgicas electivas.3
+Informes de la Comisión Nacional de Productividad (CNP) han identificado que una
+proporción significativa de este retraso no se debe a la falta absoluta de infraestructura, sino
+a la ineficiencia en la gestión de los pabellones quirúrgicos existentes. Factores como la
+suspensión de cirugías a último momento, el inicio tardío de la primera cirugía del día, y la
+subutilización de los bloques horarios disponibles, contribuyen a una pérdida de capacidad
+productiva alarmante.4
+La tabla a continuación resume los hallazgos clave sobre la ineficiencia actual, que justifican
+la necesidad de modelos de optimización:
+Indicador de Ineficiencia       Descripción del Problema         Impacto en el Sistema
+Inicio Tardío                   Retraso sistemático en el        Pérdida acumulada de horas
+                                comienzo de la primera cirugía quirúrgicas equivalentes a
+                                del bloque matutino (tabla       miles de intervenciones
+                                quirúrgica).                     anuales.
+Suspensiones                    Cancelación de cirugías          Subutilización del quirófano y
+                                programadas debido a falta de del equipo médico ya asignado
+                                camas, errores administrativos (costo de oportunidad).
+                                o ausencia del paciente.
+Brechas de Programación         Espacios vacíos en la agenda Capacidad instalada ociosa
+                                quirúrgica debido a una          mientras la lista de espera
+                                asignación manual subóptima crece.
+                                (problema de Bin Packing
+                                deficiente).
+Priorización Subjetiva          Selección de pacientes basada Inequidad en el acceso;
+                                en criterios no estandarizados pacientes con mayor gravedad
+                                o FIFO (First-In, First-Out)     pueden esperar más que
+                                ineficiente.                     casos simples.
+
+1.3. La Investigación de Operaciones en Chile: Un Ecosistema Maduro
+
+Es crucial destacar que Chile posee una tradición académica robusta en la aplicación de
+ingeniería industrial a la gestión pública. Investigadores de la Universidad de Chile, la
+Pontificia Universidad Católica de Chile y otros centros han desarrollado una literatura
+específica que adapta los modelos clásicos de optimización a la realidad local. Nombres
+como Guillermo Durán, Patricio Wolff, Pablo Rey, Alejandro Cataldo y Juan Carlos Ferrer
+aparecen recurrentemente en publicaciones de alto impacto (ISI/WOS) y en tesis de posgrado
+que abordan estos problemas.1
+Esto significa que el estudiante no necesita "inventar" un problema desde cero, sino que
+puede basarse en formulaciones matemáticas validadas, con parámetros reales estimados
+(tiempos de cirugía, tasas de llegada, prioridades biomédicas) disponibles en la literatura
+nacional. Esto cumple cabalmente con el requisito del proyecto de "trabajar con información
+lo más cercana a la realidad del problema" y basarse en "papers académicos verificables".9
+2. Problema Principal Seleccionado: Programación de
+Pabellones Quirúrgicos (Operating Room Scheduling)
+Tras una revisión exhaustiva de las fuentes, el problema de Programación de Pabellones
+Quirúrgicos (Operating Room Scheduling) se perfila como el candidato ideal para el
+proyecto. Este problema combina una alta relevancia social (reducción de listas de espera)
+con una estructura matemática rica que se adapta perfectamente a la Programación Lineal
+Entera (MILP).
+2.1. Definición Formal del Problema
+
+El problema consiste en asignar una lista de pacientes en espera (cirugías electivas) a un
+conjunto finito de recursos (pabellones quirúrgicos, cirujanos, anestesistas) durante un
+horizonte de tiempo definido (típicamente una semana), respetando restricciones de
+capacidad, competencia técnica y disponibilidad, con el objetivo de maximizar una función de
+utilidad que pondere la eficiencia y la equidad.1
+En la literatura chilena, este problema se aborda frecuentemente en la tercera etapa de la
+jerarquía de planificación hospitalaria:
+   1.​ Nivel Estratégico (Case Mix Planning): Definición de qué especialidades y en qué
+       proporciones se atenderán a largo plazo.
+   2.​ Nivel Táctico (Master Surgical Schedule - MSS): Asignación cíclica de bloques de
+       pabellón a especialidades (ej. "Traumatología tiene el Pabellón 3 los lunes por la
+       mañana").
+   3.​ Nivel Operacional (Patient Scheduling): Selección de pacientes específicos de la lista
+       de espera para llenar los bloques asignados en el MSS. Este es el foco del modelo
+       propuesto.
+2.2. Respaldo Bibliográfico Específico (La Fuente Académica)
+
+La referencia principal recomendada para el proyecto es el trabajo de Wolff, Durán y Rey,
+plasmado tanto en la tesis de magíster de Patricio Wolff (Universidad de Chile, 2011) como en
+el paper "Solving the operating room scheduling problem with prioritized lists of patients"
+(Annals of Operations Research, 2017).6
+Cita Recomendada (Formato IEEE):
+G. Durán, P. A. Rey, and P. Wolff, "Solving the operating room scheduling problem with
+prioritized lists of patients," Annals of Operations Research, vol. 258, no. 2, pp. 395-414, 2017.
+Este trabajo acredita explícitamente que el problema puede modelarse mediante
+programación lineal entera. Los autores desarrollan y comparan modelos de optimización
+utilizando datos reales de un hospital público pediátrico en Santiago, demostrando mejoras
+de entre el 10% y el 15% en la utilización de pabellones.8
+2.3. Descripción del Contexto Real y Resolución Actual
+
+En la actualidad, la resolución de este problema en muchos hospitales públicos chilenos es
+manual y descentralizada. Los jefes de servicio o enfermeras coordinadoras seleccionan a
+los pacientes basándose en la intuición, la presión de la demanda inmediata o reglas simples
+como el orden de llegada. La programación se realiza a menudo con lápiz y papel o planillas
+Excel básicas, sin una verificación automática de conflictos (ej. asignar al mismo cirujano a
+dos pabellones simultáneamente) hasta que se detecta el error humanamente.1
+Unidad de Toma de Decisiones:
+La unidad encargada suele ser la Tabla Quirúrgica o la Unidad de Gestión de Pabellones. Sin
+embargo, la decisión de qué paciente operar recae a menudo en el médico tratante, lo que
+introduce variabilidad y falta de estandarización en los criterios de priorización.9
+Variables y Parámetros en la Toma de Decisiones Manual:
+   ●​ Disponibilidad del cirujano.
+   ●​ Disponibilidad del pabellón.
+   ●​ Gravedad clínica del paciente (a juicio del médico).
+   ●​ Antigüedad en la lista de espera.
+   ●​ Disponibilidad de camas para el postoperatorio (frecuentemente ignorada en la
+      planificación manual hasta el día de la cirugía, causando suspensiones).
+2.4. Formulación Matemática del Modelo (Modelo Wolff-Durán)
+
+A continuación, se presenta una formulación detallada basada en los trabajos de Wolff y
+Durán, adaptada para ser implementada en Python con PuLP/CPLEX. Esta formulación
+corresponde a un modelo de Programación Lineal Entera Binaria (BIP).
+2.4.1. Conjuntos e Índices
+
+  ●​ $P$: Conjunto de pacientes en la lista de espera, indexados por $p$.
+  ●​ $D$: Conjunto de días en el horizonte de planificación (ej. $d=1,\dots,5$ para lunes a
+     viernes).
+  ●​ $R$: Conjunto de pabellones (recintos) disponibles, indexados por $r$.
+  ●​ $S$: Conjunto de cirujanos principales, indexados por $s$.
+2.4.2. Parámetros (Datos de Entrada)
+
+Estos parámetros deben ser construidos o simulados con base en la realidad hospitalaria
+descrita en los papers.
+  ●​ $Duracion_{p}$: Tiempo estimado de la cirugía del paciente $p$, incluyendo tiempos de
+      preparación del pabellón, anestesia, cirugía y limpieza (turnover time). Se mide en
+      minutos.
+  ●​ $Prioridad_{p}$: Valor numérico que representa la urgencia o beneficio social de operar
+      al paciente $p$. Este parámetro es crítico y se deriva de una combinación de la
+      categoría biomédica y el tiempo de espera acumulado (ver sección 2.5).
+  ●​ $Capacidad_{d,r}$: Tiempo total disponible (en minutos) en el pabellón $r$ durante el
+      día $d$. Generalmente corresponde a la jornada laboral (ej. 8:00 a 17:00 = 540
+      minutos).
+  ●​ $Competencia_{s,p}$: Parámetro binario que vale 1 si el cirujano $s$ tiene la
+      especialidad necesaria para operar al paciente $p$, y 0 en caso contrario.
+  ●​ $Disponibilidad_{s,d}$: Parámetro binario que vale 1 si el cirujano $s$ está de turno o
+     disponible el día $d$.
+  ●​ $Equipamiento_{r,p}$: Parámetro binario que vale 1 si el pabellón $r$ cuenta con el
+     equipamiento específico (ej. Arco C, microscopio) requerido para la cirugía $p$.
+2.4.3. Variables de Decisión
+
+La decisión central es binaria: asignar o no asignar.
+  ●​ $x_{p,d,r,s}$: Variable binaria. Toma el valor 1 si el paciente $p$ es programado para
+      cirugía el día $d$, en el pabellón $r$, con el cirujano $s$. Toma el valor 0 en cualquier
+      otro caso.
+Nota técnica: En algunas variantes simplificadas, se puede separar la asignación de cirujano
+($y_{p,s}$) de la de tiempo ($z_{p,d,r}$), pero la variable integrada $x_{p,d,r,s}$ permite un
+control más estricto de la compatibilidad en una sola etapa.6
+2.4.4. Función Objetivo
+
+El objetivo no es simplemente llenar los pabellones (lo que podría incentivar realizar muchas
+cirugías cortas y simples), sino maximizar el beneficio social agregado de las intervenciones
+realizadas, respetando la priorización médica.
+
+$$\text{Maximizar } Z = \sum_{p \in P} \sum_{d \in D} \sum_{r \in R} \sum_{s \in S} Prioridad_{p}
+\cdot x_{p,d,r,s}$$
+Esta función objetivo lineal asegura que el modelo "prefiera" asignar recursos a los pacientes
+con mayor puntaje de prioridad ($Prioridad_{p}$), desplazando a los menos urgentes si los
+recursos son escasos.8
+2.4.5. Restricciones del Modelo
+
+Las restricciones modelan las limitaciones físicas y lógicas del sistema sanitario.
+  1.​ Unicidad del Paciente: Un paciente no puede ser operado más de una vez en el
+      horizonte de planificación, ni estar en dos lugares al mismo tiempo.​
+      ​
+      $$\sum_{d \in D} \sum_{r \in R} \sum_{s \in S} x_{p,d,r,s} \le 1, \quad \forall p \in P$$​
+      ​
+      Nótese que es una desigualdad ($\le$), ya que no necesariamente todos los pacientes
+      de la lista podrán ser programados en una sola semana.
+  2.​ Capacidad del Pabellón (Restricción de Mochila): La suma de las duraciones de las
+      cirugías asignadas a un pabellón en un día específico no puede exceder su tiempo de
+      apertura.​
+      ​
+      $$\sum_{p \in P} \sum_{s \in S} Duracion_{p} \cdot x_{p,d,r,s} \le Capacidad_{d,r}, \quad
+      \forall d \in D, \forall r \in R$$​
+      ​
+      Esta es la restricción que define la eficiencia: el modelo intentará ajustar las cirugías
+      ("piedras") dentro del tiempo disponible ("mochila") de la manera más compacta
+      posible.11
+  3.​ Capacidad del Cirujano (No Ubicuidad): Un cirujano no puede estar operando en dos
+      pabellones simultáneamente.​
+      Si se asume una asignación por bloques, la restricción es sobre el tiempo total:​
+      ​
+      $$\sum_{p \in P} \sum_{r \in R} Duracion_{p} \cdot x_{p,d,r,s} \le JornadaLaboral_{s,d},
+      \quad \forall d \in D, \forall s \in S$$​
+      ​
+      Alternativamente, para evitar solapamientos específicos, se requeriría una modelación
+      de tiempo continuo o discretizado (timeslots), pero para el nivel de "Proyecto 1", la
+      suma de duraciones por bloque es aceptable.
+  4.​ Competencia Técnica: Un paciente solo puede ser asignado a un cirujano competente
+      para su patología.​
+      ​
+      $$x_{p,d,r,s} \le Competencia_{s,p}, \quad \forall p, d, r, s$$
+  5.​ Factibilidad de Infraestructura: El paciente solo puede ser asignado a un pabellón
+      adecuado.​
+      ​
+      $$x_{p,d,r,s} \le Equipamiento_{r,p}, \quad \forall p, d, r, s$$
+2.5. La Lógica de Priorización: El Corazón Ético del Modelo
+
+Un aspecto fundamental que el estudiante debe investigar es cómo se calcula el parámetro
+$Prioridad_{p}$. En el sistema público chileno, la priorización no puede ser arbitraria. Wolff y
+Durán proponen criterios basados en:
+   ●​ Categoría Biomédica: Gravedad de la enfermedad, dolor, discapacidad y progresión.
+   ●​ Tiempo de Espera: Días transcurridos desde el ingreso a la lista.
+   ●​ Días de Espera Ajustados por Demanda (DAWD): Una métrica que normaliza el
+       tiempo de espera según el tiempo máximo recomendado clínicamente para esa
+       patología específica.
+El modelo matemático, por tanto, no es neutro; operacionaliza la ética médica. Si el peso del
+tiempo de espera es muy alto, el sistema se comporta como una cola FIFO. Si el peso
+biomédico es dominante, se prioriza puramente la gravedad. El ajuste de estos pesos es parte
+del diseño de la solución.2
+
+3. Problema Secundario: Programación de
+Tratamientos de Quimioterapia
+Para demostrar amplitud en la investigación, se presenta un segundo problema altamente
+relevante, basado en la investigación de Ramos, Cataldo y Ferrer (2020) aplicada en
+hospitales chilenos como el Hospital del Salvador y la Red de Salud UC-Christus.
+3.1. Caracterización del Problema
+A diferencia de las cirugías, que suelen ser eventos únicos, la quimioterapia consiste en
+protocolos cíclicos (ej. una sesión cada 21 días por 6 ciclos). Esto introduce una complejidad
+temporal adicional: la decisión tomada hoy afecta la disponibilidad de recursos en tres
+semanas más.
+El problema se divide en dos fases:
+   1.​ Inter-day Scheduling: Determinar en qué días inicia el tratamiento cada paciente.
+   2.​ Intra-day Scheduling: Asignar una hora y un sillón específico, coordinando con la
+       farmacia.
+3.2. Formulación y Restricciones Específicas
+
+El cuello de botella en quimioterapia a menudo no es el sillón, sino la capacidad de la farmacia
+para preparar las drogas citotóxicas, las cuales tienen una vida útil muy corta una vez
+mezcladas.
+Un modelo lineal para este problema debe incluir restricciones del tipo:
+
+
+
+$$\sum_{p \in P} CargaTrabajoFarmacia_{p} \cdot x_{p,t} \le CapacidadFarmacia_{t}$$
+
+Donde $x_{p,t}$ indica si el paciente $p$ se atiende en el tiempo $t$. Esta integración entre
+logística de farmacia y atención clínica es un aporte distintivo de la literatura chilena en el
+área.7
+4. Problema Terciario: Distritación en Salud
+(Healthcare Districting)
+Un tercer ámbito de optimización, abordado recientemente por Castillo, Bucarey, Davila y
+Quezada (2024), es el diseño territorial de las redes de salud en la Región Metropolitana de
+Santiago.
+4.1. Definición y Relevancia
+
+El problema de Distritación en Salud busca dividir una región geográfica en unidades
+operativas (distritos) para optimizar la asignación de la población a los centros de salud
+primaria y secundaria. Una mala distritación provoca que algunos centros estén saturados
+mientras otros tienen capacidad ociosa, exacerbando las listas de espera por consultas de
+especialidad.
+4.2. Modelo Bi-Objetivo
+
+Este problema se modela mediante Programación Lineal Entera Mixta (MILP) con una
+función objetivo compuesta que busca minimizar simultáneamente:
+  1.​ La varianza en la carga de población entre distritos (Equidad).
+  2.​ La distancia promedio de los pacientes a sus centros asignados
+      (Accesibilidad/Compacidad).
+El estudio aplicado a Santiago demostró que una redistribución óptima podría reducir la
+sobrecarga en atención primaria en hasta un 38.77%.13 Este es un ejemplo excelente de un
+problema de nivel estratégico (largo plazo), a diferencia de la programación de pabellones
+que es operacional (corto plazo).
+5. Análisis Crítico: Limitaciones, Desafíos e Impacto
+5.1. El Desafío de la Estocasticidad
+
+Una limitación inherente a los modelos de Programación Lineal deterministas (como el
+propuesto para el estudiante) es que asumen que los parámetros son fijos. En la realidad, la
+duración de una cirugía es una variable aleatoria (estocástica). Una cirugía planificada para 2
+horas puede durar 3 debido a complicaciones, "rompiendo" la solución óptima del modelo y
+causando horas extra o cancelaciones.
+La literatura avanzada (Durán et al.) aborda esto mediante Optimización Robusta o asignando
+"holguras" (slack) en la capacidad (ej. planificar solo al 85% de la capacidad del pabellón).
+Para el proyecto del estudiante, es vital reconocer esta limitación y proponer el uso de
+holguras como una estrategia de mitigación en la implementación.14
+5.2. El Cuello de Botella "Aguas Abajo" (Camas)
+
+Un insight crucial derivado de la revisión de los snippets es que la eficiencia del pabellón no
+es independiente del resto del hospital. Un modelo puede optimizar perfectamente el
+quirófano, pero si no hay camas de recuperación (UCI/UTI/Sala) disponibles para recibir al
+paciente post-operado, la cirugía se cancela.
+Por lo tanto, un modelo más realista (o una extensión futura del proyecto) debería incluir una
+restricción de camas:
+
+
+
+$$\sum_{p \in P} RequiereCama_{p} \cdot x_{p,d} \le CamasDisponibles_{d}$$
+
+Ignorar esta restricción es una causa frecuente de fallo en la implementación de modelos
+teóricos en la práctica hospitalaria.16
+5.3. Impacto Potencial y Beneficio para el Paciente
+
+La implementación de estos modelos tiene un impacto directo en la métrica más sensible
+para la población: el tiempo de espera. Al maximizar la utilización del pabellón, se realizan
+más cirugías por unidad de tiempo. Al incorporar la priorización en la función objetivo, se
+asegura que la reducción de la lista no sea a costa de los pacientes más graves, sino que se
+atienda primero a quien más lo necesita. Esto aporta transparencia y justicia algorítmica a
+un proceso que a menudo es opaco.8
+
+6. Recomendaciones Metodológicas para el Estudiante
+Para la ejecución exitosa de la "Parte 1" y la preparación de la "Parte 2" del proyecto, se
+sugiere la siguiente hoja de ruta basada en la investigación:
+  1.​ Selección del Problema: Optar decididamente por el Operating Room Scheduling
+      Problem. Es el que cuenta con mayor respaldo de datos y literatura específica chilena
+      (Tesis de Wolff).
+  2.​ Herramientas de Software: Utilizar Python con la librería PuLP para el modelado.
+      PuLP permite escribir las restricciones de forma casi idéntica a la notación matemática
+      ($ \sum x_{ij} \le 1 $) y puede llamar al solver CPLEX o CBC para resolver las instancias.
+  3.​ Generación de Datos: Dado que el acceso a datos reales de pacientes puede ser
+      restringido por privacidad, se recomienda simular los datos basándose en las
+      distribuciones estadísticas reportadas en los papers citados. Por ejemplo, generar
+      duraciones de cirugía usando una distribución Log-Normal y prioridades usando una
+      distribución uniforme o basada en reglas lexicográficas.6
+  4.​ Enfoque en la Presentación: En la presentación, el estudiante debe enfatizar no solo
+      la matemática, sino el cambio de paradigma: pasar de una programación
+      reactiva/manual a una programación proactiva/optimizada. Debe destacar cómo el
+      modelo maneja la tensión entre eficiencia (llenar el pabellón) y equidad (operar al más
+      grave).
+7. Conclusión
+La investigación confirma que existen múltiples problemas en el área de la salud en Chile
+susceptibles de ser modelados mediante programación lineal. Sin embargo, la Programación
+de Pabellones Quirúrgicos con Priorización de Pacientes destaca por su urgencia social,
+su impacto económico y la solidez de la literatura académica nacional que lo respalda.
+Los trabajos de Wolff, Durán y Rey proveen una base teórica validada, ofreciendo
+formulaciones matemáticas específicas (variables binarias de asignación, restricciones de
+capacidad tipo Knapsack, funciones objetivo ponderadas) que son directamente aplicables al
+proyecto universitario. La adopción de este enfoque no solo cumple con los requisitos
+académicos, sino que conecta al estudiante con uno de los desafíos de política pública más
+apremiantes del Chile actual: garantizar una atención de salud oportuna, eficiente y digna.
+
+
+Referencias Clave Utilizadas en el Informe
+
+Para efectos de la bibliografía del proyecto del estudiante, se deben considerar las siguientes
+fuentes primarias extraídas de la investigación:
+  1.​ [Paper Principal] G. Durán, P. A. Rey, and P. Wolff, "Solving the operating room
+      scheduling problem with prioritized lists of patients," Annals of Operations Research,
+      vol. 258, no. 2, pp. 395-414, 2017. 8
+  2.​ **** P. Wolff, "Modelos de Programación Matemática para asignación de pabellones
+      quirúrgicos en hospitales públicos," Tesis de Magíster, Universidad de Chile, Santiago,
+      2011. 6
+  3.​ [Contexto Quimioterapia] C. Ramos, A. Cataldo, and J.-C. Ferrer, "Appointment and
+     patient scheduling in chemotherapy: a case study in Chilean hospitals," Annals of
+     Operations Research, vol. 286, no. 1, pp. 411-439, 2020. 7
+ 4.​ **** P. Castillo, V. Bucarey, S. Davila, and F. Quezada, "Balancing Resources and
+     Demand: A Bi-Objective Mixed-Integer Programming Approach of Healthcare Districts
+     in Chile," Proceedings of the 13th International Conference on Operations Research and
+     Enterprise Systems, 2024. 13
+ 5.​ [Informe de Política Pública] Comisión Nacional de Productividad, "Eficiencia en
+     pabellones quirúrgicos y gestión de lista de espera No GES," Informe Final, Santiago,
+     Chile, 2020. 3
+
+Obras citadas
+
+ 1.​ Modelos de Programación Matemática Para Asignación de Pabellones
+     Quirúrgicos en Hospitales Públicos - Ingeniería Industrial, fecha de acceso:
+     diciembre 9, 2025, https://www.dii.uchile.cl/~ris/RISXXVI/wolff.pdf
+ 2.​ Solving the operating room scheduling problem with prioritized lists of patients -
+     Repositorio UCHILE, fecha de acceso: diciembre 9, 2025,
+     https://repositorio.uchile.cl/bitstream/handle/2250/148324/Solving-the-operating-
+     room.pdf?sequence=1&isAllowed=y
+ 3.​ Uso Eficiente de Quirófanos Electivos y Gestión de Lista de Espera Quirúrgica NO
+     GES - Comisión Nacional de Evaluación y Productividad, fecha de acceso:
+     diciembre 9, 2025,
+     https://cnep.cl/wp-content/uploads/2025/05/Estudio-Eficiencia-pabellones-y-prio
+     rizacion-pacientes.pdf
+ 4.​ Estimación de la eficiencia del uso de pabellones electivos en el sistema de salud
+     público chileno entre 2018 y 2021 - Medwave, fecha de acceso: diciembre 9,
+     2025, https://www.medwave.cl/investigacion/estudios/2667.html
+ 5.​ ¿Cómo se usan los pabellones quirúrgicos en Chile? Radiografía al sector estatal
+     de salud - IPSUSS, fecha de acceso: diciembre 9, 2025,
+     https://www.ipsuss.cl/ipsuss/site/docs/20221125/20221125010103/uso_pabellones
+     _en_chile__2022__aguilar__velasco__ipsuss_.pdf
+ 6.​ “Modelos de Programación Matemática para asignación de ..., fecha de acceso:
+     diciembre 9, 2025,
+     http://mate.dm.uba.ar/~gduran/docs/tesis/Tesis-MGO-PWolff.pdf
+ 7.​ Appointment and patient scheduling in chemotherapy: a case study in Chilean
+     hospitals, fecha de acceso: diciembre 9, 2025,
+     https://www.researchgate.net/publication/328674025_Appointment_and_patient_
+     scheduling_in_chemotherapy_a_case_study_in_Chilean_hospitals
+ 8.​ Solving the operating room scheduling problem with prioritized lists of patients,
+     fecha de acceso: diciembre 9, 2025,
+     https://ideas.repec.org/a/spr/annopr/v258y2017i2d10.1007_s10479-016-2172-x.ht
+     ml
+ 9.​ Proyecto_I_Métodos_de_Optimización.pdf
+ 10.​Optimización de los procesos de gestión en cirugía electiva - Revista Chilena de
+     Anestesia, fecha de acceso: diciembre 9, 2025,
+     https://revistachilenadeanestesia.cl/revchilanestv50-03-05/
+11.​ ingeniería de sistemas - dii.uchile.cl - Universidad de Chile, fecha de acceso:
+     diciembre 9, 2025, http://www.dii.uchile.cl/~ris/RISXXVI/RIS_XXVI.pdf
+12.​A column generation approach to intraday scheduling of chemotherapy patients |
+     Request PDF - ResearchGate, fecha de acceso: diciembre 9, 2025,
+     https://www.researchgate.net/publication/360414629_A_column_generation_app
+     roach_to_intraday_scheduling_of_chemotherapy_patients
+13.​Balancing Resources and Demand: A Bi-Objective Mixed-Integer Programming
+     Approach of Healthcare Districts in Chile - SciTePress, fecha de acceso:
+     diciembre 9, 2025, https://www.scitepress.org/Papers/2024/124101/124101.pdf
+14.​(PDF) Surgical scheduling by Fuzzy model considering inpatient beds shortage
+     under uncertain surgery durations - ResearchGate, fecha de acceso: diciembre 9,
+     2025,
+     https://www.researchgate.net/publication/350808541_Surgical_scheduling_by_Fu
+     zzy_model_considering_inpatient_beds_shortage_under_uncertain_surgery_dura
+     tions
+15.​Random-key algorithms for optimizing integrated Operating Room Scheduling |
+     Request PDF - ResearchGate, fecha de acceso: diciembre 9, 2025,
+     https://www.researchgate.net/publication/392607786_Random-key_algorithms_f
+     or_optimizing_integrated_Operating_Room_Scheduling
+16.​Robust operating room planning considering upstream and downstream units: A
+     new two-stage heuristic algorithm - ResearchGate, fecha de acceso: diciembre
+     9, 2025,
+     https://www.researchgate.net/publication/339641127_Robust_operating_room_pl
+     anning_considering_upstream_and_downstream_units_A_new_two-stage_heuris
+     tic_algorithm
+17.​Surgical scheduling by Fuzzy model considering inpatient beds shortage under
+     uncertain surgery durations - PubMed Central, fecha de acceso: diciembre 9,
+     2025, https://pmc.ncbi.nlm.nih.gov/articles/PMC8939402/
+18.​Approximated Algorithmic Mechanism for Scheduling Chilean Operating Rooms
+     with Multi-Agent Based Simulation - Repositorio UCHILE, fecha de acceso:
+     diciembre 9, 2025,
+     https://repositorio.uchile.cl/bitstream/handle/2250/187229/Approximated-algorith
+     mic-mechanism-for-scheduling-chilean-operating-rooms.pdf?sequence=1
+
