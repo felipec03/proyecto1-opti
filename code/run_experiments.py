@@ -5,7 +5,12 @@ import os
 from solver import solve_instance
 
 def run_all():
-    instance_files = sorted(glob.glob("instances/*.json"))
+    # Look for an 'instances' directory next to this script first, then fall back to CWD
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    instance_files = sorted(glob.glob(os.path.join(script_dir, "instances", "*.json")))
+    if not instance_files:
+        instance_files = sorted(glob.glob(os.path.join(os.getcwd(), "instances", "*.json")))
+
     results = []
     
     print(f"Found {len(instance_files)} instances. Starting experiments...")
@@ -26,26 +31,28 @@ def run_all():
                 "assigned_count": 0
             })
             
-    # Save results to CSV
+    # Save results to CSV next to this script (or CWD fallback already used for instances)
     keys = ['instance', 'status', 'objective_value', 'solve_time', 'assigned_count']
-    with open("results.csv", "w", newline='') as f:
+    results_path = os.path.join(script_dir, "results.csv")
+    with open(results_path, "w", newline='') as f:
         writer = csv.DictWriter(f, fieldnames=keys)
         writer.writeheader()
         for r in results:
             # Filter only keys we want to write
             row = {k: r.get(k, 0) for k in keys}
             writer.writerow(row)
-    print("Results saved to results.csv")
+    print(f"Results saved to {results_path}")
     
     # Generate a brief report (Markdown table)
-    with open("report.md", "w") as f:
+    report_path = os.path.join(script_dir, "report.md")
+    with open(report_path, "w") as f:
         f.write("# Experiment Results\n\n")
         f.write("| Instance | Status | Objective | Time (s) | Assigned |\n")
         f.write("|---|---|---|---|---|\n")
         for r in results:
             f.write(f"| {r.get('instance')} | {r.get('status')} | {r.get('objective_value'):.2f} | {r.get('solve_time'):.2f} | {r.get('assigned_count')} |\n")
         
-    print("Report saved to report.md")
+    print(f"Report saved to {report_path}")
 
 if __name__ == "__main__":
     run_all()

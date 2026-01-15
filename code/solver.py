@@ -2,6 +2,7 @@ import pulp
 import json
 import sys
 import time
+import os
 
 def solve_instance(instance_path, solver_name="CPLEX_CMD", time_limit=300):
     """
@@ -139,11 +140,16 @@ def solve_instance(instance_path, solver_name="CPLEX_CMD", time_limit=300):
     return result
 
 if __name__ == "__main__":
-    # Test with one instance if run directly
+    # Test with one instance if run directly. Look for instances next to this script first,
+    # then fall back to a CWD 'instances/' directory.
     import glob
-    instances = sorted(glob.glob("instances/*.json"))
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    instances = sorted(glob.glob(os.path.join(script_dir, "instances", "*.json")))
+    if not instances:
+        instances = sorted(glob.glob(os.path.join(os.getcwd(), "instances", "*.json")))
+
     if instances:
         res = solve_instance(instances[0])
         print(json.dumps(res, indent=4))
     else:
-        print("No instances found.")
+        print(f"No instances found. Checked: {os.path.join(script_dir,'instances')} and {os.path.join(os.getcwd(),'instances')}")

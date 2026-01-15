@@ -105,8 +105,12 @@ def generate_instances(num_instances=10, output_dir="instances"):
         with open(filename, 'w') as f:
             json.dump(instance_data, f, indent=4)
         instances.append(filename)
-        
+
     print(f"Generated {len(instances)} instances in {output_dir}")
 
+
+# Use a relative 'instances' directory located next to this script when run directly.
 if __name__ == "__main__":
-    generate_instances(output_dir="/media/felipe/Acer/Universidad/Ingeniería Civil Informática/Octavo Semestre/Métodos de Optimización/Proyecto 1/Hito 2/code/instances")
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    default_output = os.path.join(script_dir, "instances")
+    generate_instances(output_dir=default_output)
