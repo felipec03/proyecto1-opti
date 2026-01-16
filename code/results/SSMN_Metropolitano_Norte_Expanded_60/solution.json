@@ -2,7 +2,7 @@
   "instance": "SSMN_Metropolitano_Norte_Expanded_60",
   "status": "Optimal",
   "objective_value": 15144.0,
-  "solve_time": 0.9438798427581787,
+  "solve_time": 1.1000776290893555,
   "assigned_count": 5,
   "assignments": [
     {

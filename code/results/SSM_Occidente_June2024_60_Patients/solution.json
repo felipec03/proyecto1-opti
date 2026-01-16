@@ -2,7 +2,7 @@
   "instance": "SSM_Occidente_June2024_60_Patients",
   "status": "Optimal",
   "objective_value": 30274.0,
-  "solve_time": 2.6175990104675293,
+  "solve_time": 1.2265625,
   "assigned_count": 5,
   "assignments": [
     {

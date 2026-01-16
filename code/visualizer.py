@@ -67,7 +67,7 @@ def run_solver(instance_path: str) -> Dict:
 # =============================================================================
 
 def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
-    """Create a simple Gantt chart showing surgery schedule."""
+    """Create a Gantt chart showing surgery schedule - supports monthly view."""
     
     assignments = solution.get("assignments", [])
     if not assignments:
@@ -76,19 +76,21 @@ def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
     
     patients = {p["id"]: p for p in instance["patients"]}
     num_rooms = instance["num_rooms"]
-    num_days = min(instance["num_days"], 5)  # Max 5 days for display
+    num_days = instance["num_days"]
     
     # Organize by day and room
     schedule = {}
     for a in assignments:
-        if a["day"] <= num_days:
-            key = (a["day"], a["room"])
-            if key not in schedule:
-                schedule[key] = []
-            schedule[key].append(a)
+        key = (a["day"], a["room"])
+        if key not in schedule:
+            schedule[key] = []
+        schedule[key].append(a)
     
-    # Build traces
+    # Build traces - group by week for monthly view
     fig = go.Figure()
+    
+    # Color palette for weeks
+    week_colors = ["#2563eb", "#7c3aed", "#10b981", "#f59e0b", "#ef4444"]
     
     for room in range(1, num_rooms + 1):
         for day in range(1, num_days + 1):
@@ -97,26 +99,36 @@ def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
                 continue
             
             current_time = 0
+            week_num = (day - 1) // 7
+            
             for a in schedule[key]:
                 p = patients[a["patient_id"]]
                 duration = p["duration"]
                 
-                # Y position: room number
-                y_label = f"Pabellón {room}"
+                # Y position: "Semana X - Pab Y" for monthly, "Pab Y" for weekly
+                if num_days > 7:
+                    y_label = f"Sem {week_num + 1} - Pab {room}"
+                else:
+                    y_label = f"Pabellón {room}"
+                
+                # X position: day within week (0-6) * 600 + time offset
+                day_in_week = (day - 1) % 7
+                x_base = day_in_week * 600 + current_time
                 
                 fig.add_trace(go.Bar(
                     name=f"Día {day}",
                     x=[duration],
                     y=[y_label],
-                    base=[current_time + (day - 1) * 600],  # Offset per day
+                    base=[x_base],
                     orientation="h",
-                    marker_color=COLORS["rooms"][(day - 1) % len(COLORS["rooms"])],
+                    marker_color=week_colors[week_num % len(week_colors)],
                     text=f"P{a['patient_id']}",
                     textposition="inside",
-                    textfont=dict(color="white", size=11),
+                    textfont=dict(color="white", size=10),
                     hovertemplate=(
                         f"<b>Paciente {a['patient_id']}</b><br>"
-                        f"Día: {DAYS[day-1]}<br>"
+                        f"Día: {day}<br>"
+                        f"Pabellón: {room}<br>"
                         f"Duración: {duration} min<br>"
                         f"Prioridad: {p['priority']:,}<br>"
                         f"Categoría: {p['category']}<extra></extra>"
@@ -125,15 +137,29 @@ def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
                 ))
                 current_time += duration
     
-    # Layout
+    # Calculate dimensions
+    if num_days > 7:
+        num_weeks = (num_days + 6) // 7
+        chart_height = 150 + num_weeks * num_rooms * 40
+        title_text = f"<b>Programación Mensual de Cirugías ({num_days} días)</b>"
+        x_tickvals = [i * 600 + 300 for i in range(7)]
+        x_ticktext = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
+        x_range = [0, 7 * 600]
+    else:
+        chart_height = 300 + num_rooms * 60
+        title_text = "<b>Programación Semanal de Cirugías</b>"
+        x_tickvals = [i * 600 + 300 for i in range(num_days)]
+        x_ticktext = DAYS[:num_days]
+        x_range = [0, num_days * 600]
+    
     fig.update_layout(
-        title=dict(text="<b>Programación Semanal de Cirugías</b>", font=dict(size=20)),
+        title=dict(text=title_text, font=dict(size=18)),
         barmode="overlay",
         xaxis=dict(
-            title="Tiempo (minutos)",
-            tickvals=[i * 600 + 270 for i in range(num_days)],
-            ticktext=DAYS[:num_days],
-            range=[0, num_days * 600],
+            title="Día de la Semana",
+            tickvals=x_tickvals,
+            ticktext=x_ticktext,
+            range=x_range,
             showgrid=True,
             gridcolor="#e5e7eb",
         ),
@@ -141,13 +167,13 @@ def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
         plot_bgcolor="white",
         paper_bgcolor="white",
         font=dict(family="Arial", color=COLORS["text"]),
-        height=300 + num_rooms * 60,
-        width=900,
-        margin=dict(l=100, r=40, t=60, b=60),
+        height=chart_height,
+        width=1000,
+        margin=dict(l=120, r=40, t=60, b=60),
     )
     
     # Add day separators
-    for i in range(1, num_days):
+    for i in range(1, min(7, num_days)):
         fig.add_vline(x=i * 600, line_dash="dash", line_color="#d1d5db")
     
     # Save
@@ -161,64 +187,127 @@ def create_gantt_chart(instance: Dict, solution: Dict, output_dir: str):
 # =============================================================================
 
 def create_calendar_view(instance: Dict, solution: Dict, output_dir: str):
-    """Create a calendar-style heatmap showing surgeries per day/room."""
+    """Create a calendar-style heatmap showing surgeries per day/room - supports monthly view."""
     
     assignments = solution.get("assignments", [])
     patients = {p["id"]: p for p in instance["patients"]}
     num_rooms = instance["num_rooms"]
-    num_days = min(instance["num_days"], 5)
+    num_days = instance["num_days"]
     
-    # Build matrix: rows = rooms, cols = days
-    # Value = total minutes scheduled
-    matrix = [[0 for _ in range(num_days)] for _ in range(num_rooms)]
-    surgery_counts = [[0 for _ in range(num_days)] for _ in range(num_rooms)]
+    # For monthly view, create a grid where:
+    # - Columns = days of week (Lun-Dom)
+    # - Rows = "Semana X - Pab Y"
     
-    for a in assignments:
-        if a["day"] <= num_days:
+    if num_days > 7:
+        # Monthly view: organize by week and room
+        num_weeks = (num_days + 6) // 7
+        
+        # Build data structure: week -> room -> day_of_week -> minutes
+        data = {}
+        counts = {}
+        for week in range(num_weeks):
+            for room in range(1, num_rooms + 1):
+                key = (week, room)
+                data[key] = [0] * 7
+                counts[key] = [0] * 7
+        
+        for a in assignments:
+            day = a["day"]
+            room = a["room"]
+            week = (day - 1) // 7
+            day_of_week = (day - 1) % 7
+            p = patients[a["patient_id"]]
+            key = (week, room)
+            if key in data:
+                data[key][day_of_week] += p["duration"]
+                counts[key][day_of_week] += 1
+        
+        # Build matrix for heatmap
+        y_labels = []
+        z_matrix = []
+        text_matrix = []
+        
+        for week in range(num_weeks):
+            for room in range(1, num_rooms + 1):
+                key = (week, room)
+                y_labels.append(f"Sem {week + 1} - Pab {room}")
+                z_matrix.append(data[key])
+                
+                row_text = []
+                for dow in range(7):
+                    mins = data[key][dow]
+                    count = counts[key][dow]
+                    if mins > 0:
+                        pct = mins / 459 * 100
+                        row_text.append(f"{count}<br>{mins}'<br>{pct:.0f}%")
+                    else:
+                        row_text.append("")
+                text_matrix.append(row_text)
+        
+        x_labels = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
+        chart_height = 100 + len(y_labels) * 45
+        chart_width = 800
+        title_text = f"<b>Calendario Mensual de Ocupación ({num_days} días)</b>"
+        text_size = 9
+        
+    else:
+        # Weekly view: simple grid
+        matrix = [[0 for _ in range(num_days)] for _ in range(num_rooms)]
+        surgery_counts = [[0 for _ in range(num_days)] for _ in range(num_rooms)]
+        
+        for a in assignments:
             room_idx = a["room"] - 1
             day_idx = a["day"] - 1
             p = patients[a["patient_id"]]
             matrix[room_idx][day_idx] += p["duration"]
             surgery_counts[room_idx][day_idx] += 1
-    
-    # Create heatmap with text annotations
-    text_matrix = []
-    for r in range(num_rooms):
-        row = []
-        for d in range(num_days):
-            mins = matrix[r][d]
-            count = surgery_counts[r][d]
-            pct = mins / 540 * 100 if mins > 0 else 0
-            row.append(f"{count} cirugías<br>{mins} min<br>({pct:.0f}%)")
-        text_matrix.append(row)
+        
+        y_labels = [f"Pabellón {r+1}" for r in range(num_rooms)]
+        z_matrix = matrix
+        text_matrix = []
+        for r in range(num_rooms):
+            row = []
+            for d in range(num_days):
+                mins = matrix[r][d]
+                count = surgery_counts[r][d]
+                pct = mins / 540 * 100 if mins > 0 else 0
+                row.append(f"{count} cir<br>{mins}'<br>{pct:.0f}%")
+            text_matrix.append(row)
+        
+        x_labels = DAYS[:num_days]
+        chart_height = 150 + num_rooms * 80
+        chart_width = 700
+        title_text = "<b>Calendario de Ocupación de Pabellones</b>"
+        text_size = 11
     
     fig = go.Figure(data=go.Heatmap(
-        z=matrix,
-        x=DAYS[:num_days],
-        y=[f"Pabellón {r+1}" for r in range(num_rooms)],
+        z=z_matrix,
+        x=x_labels,
+        y=y_labels,
         text=text_matrix,
         texttemplate="%{text}",
-        textfont=dict(size=11, color="white"),
+        textfont=dict(size=text_size, color="white"),
         colorscale=[
             [0, "#f3f4f6"],
-            [0.5, "#3b82f6"],
+            [0.3, "#93c5fd"],
+            [0.6, "#3b82f6"],
             [1, "#1e40af"]
         ],
         showscale=True,
-        colorbar=dict(title="Minutos", ticksuffix=" min"),
+        colorbar=dict(title="Min", ticksuffix=""),
         hovertemplate="<b>%{y}</b> - %{x}<br>%{text}<extra></extra>",
     ))
     
     fig.update_layout(
-        title=dict(text="<b>Calendario de Ocupación de Pabellones</b>", font=dict(size=20)),
+        title=dict(text=title_text, font=dict(size=18)),
         xaxis=dict(title="", side="top"),
         yaxis=dict(title="", autorange="reversed"),
         plot_bgcolor="white",
         paper_bgcolor="white",
         font=dict(family="Arial", color=COLORS["text"]),
-        height=150 + num_rooms * 80,
-        width=700,
-        margin=dict(l=100, r=40, t=80, b=40),
+        height=chart_height,
+        width=chart_width,
+        margin=dict(l=120, r=60, t=80, b=40),
     )
     
     path = os.path.join(output_dir, "calendar_view.html")

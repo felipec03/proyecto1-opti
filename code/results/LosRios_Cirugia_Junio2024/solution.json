@@ -2,7 +2,7 @@
   "instance": "LosRios_Cirugia_Junio2024",
   "status": "Optimal",
   "objective_value": 4361.0,
-  "solve_time": 4.785287380218506,
+  "solve_time": 1.024146318435669,
   "assigned_count": 5,
   "assignments": [
     {

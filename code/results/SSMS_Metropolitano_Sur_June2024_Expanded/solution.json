@@ -2,7 +2,7 @@
   "instance": "SSMS_Metropolitano_Sur_June2024_Expanded",
   "status": "Optimal",
   "objective_value": 29090.0,
-  "solve_time": 0.8945319652557373,
+  "solve_time": 0.9845116138458252,
   "assigned_count": 5,
   "assignments": [
     {

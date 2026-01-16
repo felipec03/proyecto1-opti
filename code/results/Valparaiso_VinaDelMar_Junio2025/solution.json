@@ -2,7 +2,7 @@
   "instance": "Valparaiso_VinaDelMar_Junio2025",
   "status": "Optimal",
   "objective_value": 23848.0,
-  "solve_time": 4.397844076156616,
+  "solve_time": 0.6057460308074951,
   "assigned_count": 4,
   "assignments": [
     {

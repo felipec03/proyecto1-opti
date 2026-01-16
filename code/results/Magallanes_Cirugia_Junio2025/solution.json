@@ -2,7 +2,7 @@
   "instance": "Magallanes_Cirugia_Junio2025",
   "status": "Optimal",
   "objective_value": 15616.0,
-  "solve_time": 0.15903091430664062,
+  "solve_time": 0.33066320419311523,
   "assigned_count": 3,
   "assignments": [
     {

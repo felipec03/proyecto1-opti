@@ -2,7 +2,7 @@
   "instance": "BioBio_Concepcion_Junio2024",
   "status": "Optimal",
   "objective_value": 18168.0,
-  "solve_time": 4.373738527297974,
+  "solve_time": 0.7182278633117676,
   "assigned_count": 4,
   "assignments": [
     {
