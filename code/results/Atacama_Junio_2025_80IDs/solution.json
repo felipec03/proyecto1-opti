@@ -1,0 +1,15 @@
+{
+  "instance": "Atacama_Junio_2025_80IDs",
+  "status": "Optimal",
+  "objective_value": 10560.0,
+  "solve_time": 0.6561529636383057,
+  "assigned_count": 1,
+  "assignments": [
+    {
+      "patient_id": 1,
+      "day": 5,
+      "room": 2,
+      "surgeon": 2
+    }
+  ]
+}

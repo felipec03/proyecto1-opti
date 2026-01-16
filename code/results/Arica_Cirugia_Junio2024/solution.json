@@ -1,0 +1,45 @@
+{
+  "instance": "Arica_Cirugia_Junio2024",
+  "status": "Optimal",
+  "objective_value": 8412.0,
+  "solve_time": 1.878965139389038,
+  "assigned_count": 6,
+  "assignments": [
+    {
+      "patient_id": 1,
+      "day": 5,
+      "room": 2,
+      "surgeon": 1
+    },
+    {
+      "patient_id": 2,
+      "day": 2,
+      "room": 2,
+      "surgeon": 4
+    },
+    {
+      "patient_id": 3,
+      "day": 5,
+      "room": 2,
+      "surgeon": 7
+    },
+    {
+      "patient_id": 4,
+      "day": 3,
+      "room": 3,
+      "surgeon": 9
+    },
+    {
+      "patient_id": 5,
+      "day": 4,
+      "room": 4,
+      "surgeon": 11
+    },
+    {
+      "patient_id": 6,
+      "day": 4,
+      "room": 2,
+      "surgeon": 12
+    }
+  ]
+}

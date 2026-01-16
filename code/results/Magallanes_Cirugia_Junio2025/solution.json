@@ -1,0 +1,27 @@
+{
+  "instance": "Magallanes_Cirugia_Junio2025",
+  "status": "Optimal",
+  "objective_value": 15616.0,
+  "solve_time": 0.15903091430664062,
+  "assigned_count": 3,
+  "assignments": [
+    {
+      "patient_id": 1,
+      "day": 1,
+      "room": 1,
+      "surgeon": 1
+    },
+    {
+      "patient_id": 2,
+      "day": 1,
+      "room": 1,
+      "surgeon": 3
+    },
+    {
+      "patient_id": 3,
+      "day": 5,
+      "room": 2,
+      "surgeon": 5
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "instance": "SSMC_Metropolitano_Central_June2024_Expanded",
+  "status": "Optimal",
+  "objective_value": 36972.0,
+  "solve_time": 0.8236818313598633,
+  "assigned_count": 5,
+  "assignments": [
+    {
+      "patient_id": 1,
+      "day": 1,
+      "room": 1,
+      "surgeon": 2
+    },
+    {
+      "patient_id": 2,
+      "day": 4,
+      "room": 1,
+      "surgeon": 2
+    },
+    {
+      "patient_id": 3,
+      "day": 3,
+      "room": 2,
+      "surgeon": 3
+    },
+    {
+      "patient_id": 4,
+      "day": 4,
+      "room": 2,
+      "surgeon": 4
+    },
+    {
+      "patient_id": 5,
+      "day": 3,
+      "room": 1,
+      "surgeon": 5
+    }
+  ]
+}
