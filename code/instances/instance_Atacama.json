@@ -1,0 +1,72 @@
+{
+  "name": "Atacama_Junio_2025_80IDs",
+  "num_days": 5,
+  "num_rooms": 2,
+  "num_surgeons": 8,
+  "patients": [
+  { "id": 1, "duration": 120, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 2, "duration": 45, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 3, "duration": 90, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 4, "duration": 60, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 3 },
+  { "id": 5, "duration": 150, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 6, "duration": 200, "priority": 6948, "category": 2, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 7, "duration": 35, "priority": 220, "category": 5, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 8, "duration": 80, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 9, "duration": 110, "priority": 2316, "category": 3, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 10, "duration": 55, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 11, "duration": 130, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 12, "duration": 75, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 13, "duration": 40, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 14, "duration": 95, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 15, "duration": 180, "priority": 6948, "category": 2, "waiting_time": 579, "required_specialty": 3 },
+  { "id": 16, "duration": 50, "priority": 220, "category": 5, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 17, "duration": 105, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 18, "duration": 85, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 19, "duration": 140, "priority": 2316, "category": 3, "waiting_time": 579, "required_specialty": 2 },
+  { "id": 20, "duration": 65, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 21, "duration": 120, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 22, "duration": 45, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 2 },
+  { "id": 23, "duration": 90, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 4 },
+  { "id": 24, "duration": 60, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 5 },
+  { "id": 25, "duration": 150, "priority": 6948, "category": 2, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 26, "duration": 30, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 27, "duration": 200, "priority": 220, "category": 5, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 28, "duration": 110, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 29, "duration": 75, "priority": 2316, "category": 3, "waiting_time": 579, "required_specialty": 3 },
+  { "id": 30, "duration": 40, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 4 },
+  { "id": 31, "duration": 130, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 32, "duration": 65, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 33, "duration": 180, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 5 },
+  { "id": 34, "duration": 55, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 35, "duration": 140, "priority": 6948, "category": 2, "waiting_time": 579, "required_specialty": 2 },
+  { "id": 36, "duration": 95, "priority": 2316, "category": 3, "waiting_time": 579, "required_specialty": 3 },
+  { "id": 37, "duration": 50, "priority": 220, "category": 5, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 38, "duration": 105, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 39, "duration": 85, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 40, "duration": 120, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 4 },
+  { "id": 41, "duration": 45, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 42, "duration": 60, "priority": 2640, "category": 2, "waiting_time": 220, "required_specialty": 5 },
+  { "id": 43, "duration": 150, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 2 },
+  { "id": 44, "duration": 210, "priority": 6948, "category": 2, "waiting_time": 579, "required_specialty": 1 },
+  { "id": 45, "duration": 35, "priority": 440, "category": 4, "waiting_time": 220, "required_specialty": 3 },
+  { "id": 46, "duration": 115, "priority": 880, "category": 3, "waiting_time": 220, "required_specialty": 4 },
+  { "id": 47, "duration": 80, "priority": 2316, "category": 3, "waiting_time": 579, "required_specialty": 2 },
+  { "id": 48, "duration": 55, "priority": 220, "category": 5, "waiting_time": 220, "required_specialty": 1 },
+  { "id": 49, "duration": 125, "priority": 27792, "category": 1, "waiting_time": 579, "required_specialty": 3 },
+  { "id": 50, "duration": 40, "priority": 10560, "category": 1, "waiting_time": 220, "required_specialty": 2 }
+],"room_capacities": {
+    "1_1": 540, "1_2": 540, "2_1": 540, "2_2": 540, "3_1": 540, 
+    "3_2": 540, "4_1": 540, "4_2": 540, "5_1": 540, "5_2": 540
+  },
+  "competence": {
+    "1_1": 1, "2_1": 1, "3_1": 0, "4_1": 0, "5_1": 0, "6_1": 0, "7_1": 0, "8_1": 0,
+    "1_2": 0, "2_2": 0, "3_2": 1, "4_2": 1, "5_2": 0, "6_2": 0, "7_2": 0, "8_2": 0
+    },
+  "availability": {
+    "1_1": 1, "1_2": 1, "1_3": 1, "1_4": 1, "1_5": 1,
+    "2_1": 1, "2_2": 1, "2_3": 1, "2_4": 1, "2_5": 1
+    },
+  "room_compatibility": {
+    "1_1": 1, "2_1": 1, "1_2": 1, "2_2": 1
+    }
+}

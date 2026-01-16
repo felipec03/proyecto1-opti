@@ -1,0 +1,414 @@
+{
+    "name": "Magallanes_Cirugia_Junio2025",
+    "num_days": 5,
+    "num_rooms": 2,
+    "num_surgeons": 6,
+    "patients": [
+        {
+            "id": 1,
+            "duration": 130,
+            "priority": 11712,
+            "category": 1,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 2,
+            "duration": 85,
+            "priority": 2928,
+            "category": 2,
+            "waiting_time": 244,
+            "required_specialty": 2
+        },
+        {
+            "id": 3,
+            "duration": 110,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 4,
+            "duration": 60,
+            "priority": 488,
+            "category": 4,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 5,
+            "duration": 150,
+            "priority": 14880,
+            "category": 1,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 6,
+            "duration": 75,
+            "priority": 3720,
+            "category": 2,
+            "waiting_time": 310,
+            "required_specialty": 1
+        },
+        {
+            "id": 7,
+            "duration": 95,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 8,
+            "duration": 180,
+            "priority": 11712,
+            "category": 1,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 9,
+            "duration": 70,
+            "priority": 1240,
+            "category": 3,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 10,
+            "duration": 120,
+            "priority": 2928,
+            "category": 2,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 11,
+            "duration": 55,
+            "priority": 620,
+            "category": 4,
+            "waiting_time": 310,
+            "required_specialty": 3
+        },
+        {
+            "id": 12,
+            "duration": 140,
+            "priority": 14880,
+            "category": 1,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 13,
+            "duration": 100,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 14,
+            "duration": 65,
+            "priority": 244,
+            "category": 5,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 15,
+            "duration": 175,
+            "priority": 3720,
+            "category": 2,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 16,
+            "duration": 90,
+            "priority": 11712,
+            "category": 1,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 17,
+            "duration": 50,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 18,
+            "duration": 160,
+            "priority": 2928,
+            "category": 2,
+            "waiting_time": 244,
+            "required_specialty": 2
+        },
+        {
+            "id": 19,
+            "duration": 80,
+            "priority": 488,
+            "category": 4,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 20,
+            "duration": 125,
+            "priority": 14880,
+            "category": 1,
+            "waiting_time": 310,
+            "required_specialty": 3
+        },
+        {
+            "id": 21,
+            "duration": 105,
+            "priority": 1240,
+            "category": 3,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 22,
+            "duration": 45,
+            "priority": 3720,
+            "category": 2,
+            "waiting_time": 310,
+            "required_specialty": 1
+        },
+        {
+            "id": 23,
+            "duration": 135,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 24,
+            "duration": 70,
+            "priority": 310,
+            "category": 5,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 25,
+            "duration": 185,
+            "priority": 11712,
+            "category": 1,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 26,
+            "duration": 95,
+            "priority": 2928,
+            "category": 2,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 27,
+            "duration": 60,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 2
+        },
+        {
+            "id": 28,
+            "duration": 145,
+            "priority": 620,
+            "category": 4,
+            "waiting_time": 310,
+            "required_specialty": 1
+        },
+        {
+            "id": 29,
+            "duration": 115,
+            "priority": 14880,
+            "category": 1,
+            "waiting_time": 310,
+            "required_specialty": 3
+        },
+        {
+            "id": 30,
+            "duration": 85,
+            "priority": 1240,
+            "category": 3,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 31,
+            "duration": 155,
+            "priority": 3720,
+            "category": 2,
+            "waiting_time": 310,
+            "required_specialty": 1
+        },
+        {
+            "id": 32,
+            "duration": 75,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 33,
+            "duration": 40,
+            "priority": 244,
+            "category": 5,
+            "waiting_time": 244,
+            "required_specialty": 2
+        },
+        {
+            "id": 34,
+            "duration": 170,
+            "priority": 11712,
+            "category": 1,
+            "waiting_time": 244,
+            "required_specialty": 1
+        },
+        {
+            "id": 35,
+            "duration": 100,
+            "priority": 2928,
+            "category": 2,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 36,
+            "duration": 55,
+            "priority": 488,
+            "category": 4,
+            "waiting_time": 244,
+            "required_specialty": 2
+        },
+        {
+            "id": 37,
+            "duration": 130,
+            "priority": 14880,
+            "category": 1,
+            "waiting_time": 310,
+            "required_specialty": 1
+        },
+        {
+            "id": 38,
+            "duration": 90,
+            "priority": 976,
+            "category": 3,
+            "waiting_time": 244,
+            "required_specialty": 3
+        },
+        {
+            "id": 39,
+            "duration": 165,
+            "priority": 3720,
+            "category": 2,
+            "waiting_time": 310,
+            "required_specialty": 2
+        },
+        {
+            "id": 40,
+            "duration": 80,
+            "priority": 1240,
+            "category": 3,
+            "waiting_time": 310,
+            "required_specialty": 1
+        }
+    ],
+    "room_capacities": {
+        "1_1": 540,
+        "1_2": 540,
+        "2_1": 540,
+        "2_2": 540,
+        "3_1": 540,
+        "3_2": 540,
+        "4_1": 540,
+        "4_2": 540,
+        "5_1": 540,
+        "5_2": 540
+    },
+    "competence": {
+        "1_1": 1,
+        "2_1": 1,
+        "3_1": 0,
+        "4_1": 0,
+        "5_1": 0,
+        "6_1": 0,
+        "1_2": 0,
+        "2_2": 0,
+        "3_2": 1,
+        "4_2": 1,
+        "5_2": 0,
+        "6_2": 0,
+        "1_3": 0,
+        "2_3": 0,
+        "3_3": 0,
+        "4_3": 0,
+        "5_3": 1,
+        "6_3": 1
+    },
+    "availability": {
+        "1_1": 1,
+        "1_2": 1,
+        "1_3": 1,
+        "1_4": 1,
+        "1_5": 1,
+        "2_1": 1,
+        "2_2": 1,
+        "2_3": 1,
+        "2_4": 1,
+        "2_5": 1,
+        "3_1": 1,
+        "3_2": 1,
+        "3_3": 1,
+        "3_4": 1,
+        "3_5": 1,
+        "4_1": 1,
+        "4_2": 1,
+        "4_3": 1,
+        "4_4": 1,
+        "4_5": 1,
+        "5_1": 1,
+        "5_2": 1,
+        "5_3": 1,
+        "5_4": 1,
+        "5_5": 1,
+        "6_1": 1,
+        "6_2": 1,
+        "6_3": 1,
+        "6_4": 1,
+        "6_5": 1
+    },
+    "room_compatibility": {
+        "1_1": 1,
+        "2_1": 1,
+        "1_2": 1,
+        "2_2": 1,
+        "1_3": 1,
+        "2_3": 1,
+        "1_4": 1,
+        "2_4": 1,
+        "1_5": 1,
+        "2_5": 1,
+        "1_6": 1,
+        "2_6": 1,
+        "1_7": 1,
+        "2_7": 1,
+        "1_8": 1,
+        "2_8": 1,
+        "1_9": 1,
+        "2_9": 1,
+        "1_10": 1,
+        "2_10": 1
+    }
+}

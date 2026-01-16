@@ -1,0 +1,33 @@
+{
+  "instance": "Valparaiso_VinaDelMar_Junio2025",
+  "status": "Optimal",
+  "objective_value": 23848.0,
+  "solve_time": 0.6057460308074951,
+  "assigned_count": 4,
+  "assignments": [
+    {
+      "patient_id": 1,
+      "day": 3,
+      "room": 3,
+      "surgeon": 2
+    },
+    {
+      "patient_id": 2,
+      "day": 4,
+      "room": 1,
+      "surgeon": 5
+    },
+    {
+      "patient_id": 3,
+      "day": 5,
+      "room": 3,
+      "surgeon": 6
+    },
+    {
+      "patient_id": 4,
+      "day": 1,
+      "room": 3,
+      "surgeon": 10
+    }
+  ]
+}
